@@ -27,6 +27,7 @@
                                     <td>{{$customer->name}}</td>
                                     <td>{{$customer->Address}}<br>
                                         {{$customer->postalCode}}-{{$customer->city}}
+                                        <btn class="fa fa-search-location"></btn>
                                     </td>
                                     <td>{{$customer->email}}</td>
                                     <td>{{$customer->url}}</td>

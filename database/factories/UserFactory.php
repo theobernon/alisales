@@ -44,4 +44,9 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function customer()
+    {
+
+    }
 }

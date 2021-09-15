@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerFactory extends Factory
 {
@@ -28,6 +29,8 @@ class CustomerFactory extends Factory
                         'city'=> $this->faker->city,
                         'email' => $this->faker->email,
                         'url'=> $this->faker->url,
+                        'user_id'=> $this->faker->numberBetween(1,11),
         ];
     }
+
 }

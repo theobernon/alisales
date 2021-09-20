@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,9 +13,8 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public  function index()
+    public function index()
     {
-//        return view('customer.index',['customers'=>Customer::all()]);
         return view('customer.index',['customers'=>Auth::user()->customers]);
     }
 
@@ -50,8 +48,6 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         return view('customer.show',['customer'=>$customer]);
-
-
     }
 
     /**
@@ -83,8 +79,6 @@ class CustomerController extends Controller
     {
         return view('customer.delete',['customer'=>$customer]);
     }
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -96,7 +90,4 @@ class CustomerController extends Controller
         $customer->delete();
         return redirect(route('customer.index'));
     }
-
-
 }
-

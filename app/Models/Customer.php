@@ -9,12 +9,47 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected  $fillable=['name','address','postalCode','city','email','url'];
+    protected $fillable=['name','address','postalCode','city','email','url'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class)->orderBy('datetime','desc');
+    }
+
+    /**
+     * @return int|mixed
+     */
+    public function amount()
+    {
+        return $this->orders()->sum('amount');
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

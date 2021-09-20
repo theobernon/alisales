@@ -17,13 +17,11 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,8 +42,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function customers()
     {
         return $this->hasMany(Customer::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class,Customer::class)->orderBy('datetime','desc');
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

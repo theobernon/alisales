@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerFactory extends Factory
 {
@@ -23,14 +23,27 @@ class CustomerFactory extends Factory
     public function definition()
     {
         return [
-                        'name' => $this->faker->company,
-                        'address'=> $this->faker->address,
-                        'postalCode'=> $this->faker->postcode,
-                        'city'=> $this->faker->city,
-                        'email' => $this->faker->email,
-                        'url'=> $this->faker->url,
-                        'user_id'=> $this->faker->numberBetween(1,11),
+            'name'=>$this->faker->company,
+            'address'=> $this->faker->streetAddress,
+            'postalCode'=>$this->faker->postcode,
+            'city'=>$this->faker->city,
+            'email'=>$this->faker->email,
+            'url'=>$this->faker->url,
+            'user_id'=>User::inRandomOrder()->first()->id,
         ];
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

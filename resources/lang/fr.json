@@ -8,5 +8,8 @@
     "Email": "Email",
     "Website": "Site",
     "Update": "Modifier",
-    "Orders": "Commandes"
+    "Orders": "Commandes",
+    "Products": "Produits",
+    "Amount": "Montant",
+    "Amount VTA": "Montant TVA"
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,11 +20,9 @@ class DatabaseSeeder extends Seeder
             'email'=>'test@test.fr',
             'password'=>Hash::make('12345678'),
         ]);
-
         User::factory(10)->create();
-
-         $this->call([
-             CustomerSeeder::class,
-         ]);
+        $this->call([
+            CustomerSeeder::class,
+        ]);
     }
 }

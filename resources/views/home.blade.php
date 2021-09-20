@@ -3,7 +3,7 @@
 @section('title', env('APP_NAME'))
 
 @section('content_header')
-    <h1 class="m-0 text-dark"><?php echo e(__('adminlte::adminlte.dashboard')); ?></h1>
+    <h1 class="m-0 text-dark">{{__('Dashboard')}}</h1>
 @stop
 
 @section('content')

@@ -18,18 +18,20 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-
-//Route::redirect('/', '/login');
-
-//Route::get('/customer',function (){
-//    return view('customer');
-//});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('customer', CustomerController::class);
-Route::get('customer/{customer}/delete',[CustomerController::class,'delete'])->name('customer.delete');
+Route::middleware('auth')->group(function(){
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('customer', CustomerController::class);
+    Route::get('customer/{customer}/delete',[CustomerController::class,'delete'])->name('customer.delete');
+
+    Route::resource('order',\App\Http\Controllers\OrderController::class);
+    Route::get('order/{order}/delete',[OrderController::class,'delete'])->name('order.delete');
+});
+
+
+
+
 
 
 

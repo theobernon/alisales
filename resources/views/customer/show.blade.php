@@ -3,7 +3,7 @@
 @section('title', env('APP_NAME'))
 
 @section('content_header')
-    <h1 class="m-0 text-dark">{{__("Customers")}}</h1>
+    <h1 class="m-0 text-dark">{{$customer->name}}</h1>
 @stop
 
 @section('content')
@@ -13,36 +13,37 @@
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
-
                     <h3 class="profile-username text-center">{{$customer->name}}</h3>
 
-
-                    <ul class="list-group list-group-unbordered mb-3">
-                        <li class="list-group-item">
-                            <b>{{__('Address')}}</b>
-                            <span class="float-right">{{$customer->address}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <b>{{__('Postal code')}}</b>
-                            <span class="float-right">{{$customer->postalCode}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <b>{{__('City')}}</b>
-                            <span class="float-right">{{$customer->city}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <b>{{__('Email')}}</b>
-                            <span class="float-right">{{$customer->email}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <b>{{__('Website')}}</b>
-                            <a class="float-right" href="{{$customer->url}}" target="_blank">
+                    <x-list.group>
+                        <x-list.group-item label="Address">
+                            {{$customer->address}}
+                        </x-list.group-item>
+                        <x-list.group-item label="Postal code">
+                            {{$customer->postalCode}}
+                        </x-list.group-item>
+                        <x-list.group-item label="Ville">
+                            {{$customer->city}}
+                        </x-list.group-item>
+                        <x-list.group-item label="email">
+                            {{$customer->email}}
+                        </x-list.group-item>
+                        <x-list.group-item label="Site">
+                            <a href="{{$customer->url}}">
                                 <i class="fa fa-external-link-alt"></i>
                             </a>
-                        </li>
-                    </ul>
+                        </x-list.group-item>
+                        <x-list.group-item label="Total amount">
+                            <x-amount :amount="$customer->amount()"></x-amount>
+                        </x-list.group-item>
+                    </x-list.group>
+                    <a href="{{route('customer.delete',['customer'=>$customer])}}" class="btn btn-danger col-5 float-left">
+                        <b>{{__('Delete')}}</b>
+                    </a>
 
-                    <a href="{{route('customer.edit',['customer'=>$customer])}}" class="btn btn-primary btn-block"><b>{{__('Update')}}</b></a>
+                    <a href="{{route('customer.edit',['customer'=>$customer])}}" class="btn btn-primary col-5 float-right">
+                        <b>{{__('Update')}}</b>
+                    </a>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -51,9 +52,8 @@
         <div class="col-9">
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
-
-                    <h3> {{__('Orders')}}</h3>
-
+                    <h3>{{__('Orders')}}</h3>
+                    <x-order.table :orders="$customer->orders"></x-order.table>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -61,3 +61,13 @@
     </div>
 @stop
 
+@section('js')
+    @parent
+    <script>
+        $('.datatable').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.1/i18n/fr_fr.json'
+            }
+        });
+    </script>
+@endsection

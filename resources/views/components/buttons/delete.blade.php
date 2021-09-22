@@ -1,4 +1,5 @@
-<a @if($slot=='')
+<a
+    @if($slot=='')
    class="btn btn-danger btn-xs"
    @endif
    href="{{$route}}">

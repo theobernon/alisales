@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable=['name','address','postalCode','city','email','url'];
+    protected $fillable=['name','address','postalCode','city','email','url','id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

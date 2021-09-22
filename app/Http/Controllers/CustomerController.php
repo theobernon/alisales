@@ -23,9 +23,9 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Customer $customer)
     {
-        //
+        return  view('customer.create',['customer'=>$customer]);
     }
 
     /**
@@ -36,7 +36,18 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = New Customer();
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+        $customer->postalCode = $request->postalCode;
+        $customer->city = $request->city;
+        $customer->email = $request->email;
+        $customer->url = $request->url;
+        $customer->user_id = Auth::user()->id;
+        $customer->save();
+//        $request['user_id'] = Auth::user()->id;
+//        Customer::create($request->all(['name','address','postalCode','city','email','url','user_id']));
+        return redirect(route('customer.index'));
     }
 
     /**
@@ -60,6 +71,8 @@ class CustomerController extends Controller
     {
         return view('customer.edit',['customer'=>$customer]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -90,4 +103,7 @@ class CustomerController extends Controller
         $customer->delete();
         return redirect(route('customer.index'));
     }
+
+
 }
+

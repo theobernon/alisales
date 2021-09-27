@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $casts=['datetime'=>'datetime'];
+    protected $fillable=['name','date','amount','amountTVA','id'];
 
     public function customer()
     {

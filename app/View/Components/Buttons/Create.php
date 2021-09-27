@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 
 class Create extends Component
 {
+    public $route;
 
     use Model;
 
@@ -16,15 +17,11 @@ class Create extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($route)
     {
-
+        $this->route = $route;
     }
 
-    public function route()
-    {
-        return route('customer.create');
-    }
 
     /**
      * Get the view / contents that represent the component.

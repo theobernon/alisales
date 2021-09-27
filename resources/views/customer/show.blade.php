@@ -53,6 +53,8 @@
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
                     <h3>{{__('Orders')}}</h3>
+                    {{__('Create')}}
+                    <x-buttons.create :route="route('order.create')"></x-buttons.create>
                     <x-order.table :orders="$customer->orders"></x-order.table>
                 </div>
                 <!-- /.card-body -->

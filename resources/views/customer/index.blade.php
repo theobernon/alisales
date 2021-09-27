@@ -6,7 +6,7 @@
     <h1 class="m-0 text-dark">{{__('Customers')}}</h1>
     <br>
     {{__('Create')}}
-    <x-buttons.create></x-buttons.create>
+    <x-buttons.create :route="route('customer.create')"></x-buttons.create>
 
 @stop
 

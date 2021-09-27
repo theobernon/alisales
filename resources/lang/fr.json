@@ -12,5 +12,7 @@
     "Products": "Produits",
     "Amount": "Montant",
     "Amount VTA": "Montant TVA",
-    "Create": "Créer"
+    "Create": "Créer",
+    "Customer": "Nom",
+    "Date" : "Date"
 }

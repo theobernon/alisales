@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function(){
 
     Route::resource('order',\App\Http\Controllers\OrderController::class);
     Route::get('order/{order}/delete',[OrderController::class,'delete'])->name('order.delete');
+
+//    Route::resource('order',\App\Http\Controllers\OrderController::class);
+//    Route::get('order/{customer}/createOrder',[CustomerController::class,'create']);
+
 });
 
 

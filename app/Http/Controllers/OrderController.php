@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('order.create',['orders'=>Auth::user()->orders()->with('customer')->get()]);
     }
 
     /**
@@ -36,7 +36,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = New Order();
+        $order->amount = $request->amount;
+        $order->amountTVA = $request->amountTVA;
+        $order->datetime = $request->datetime;
+        $order->customer_id = 1;
+        $order->save();
+        return redirect(route('customer.index'));
     }
 
     /**

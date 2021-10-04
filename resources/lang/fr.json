@@ -14,5 +14,8 @@
     "Amount VTA": "Montant TVA",
     "Create": "Créer",
     "Customer": "Nom",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Add  an order": "Ajouter une commande",
+    "Not allowed" : "Interdit",
+    "Error" : "Erreur"
 }

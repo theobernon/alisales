@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customer.index',['customers'=>Auth::user()->customers]);
+        $customers = Auth::user()->customers->filter(function ($item){
+            return Auth::user()->can('view',$item);
+        });
+        return view('customer.index',['customers'=>$customers]);
     }
 
     /**
@@ -25,7 +29,12 @@ class CustomerController extends Controller
      */
     public function create(Customer $customer)
     {
-        return  view('customer.create',['customer'=>$customer]);
+        if(Auth::user()->can('create',Order::class)){
+            return  view('customer.create',['customer'=>$customer]);
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
     /**
@@ -36,18 +45,21 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = New Customer();
-        $customer->name = $request->name;
-        $customer->address = $request->address;
-        $customer->postalCode = $request->postalCode;
-        $customer->city = $request->city;
-        $customer->email = $request->email;
-        $customer->url = $request->url;
-        $customer->user_id = Auth::user()->id;
-        $customer->save();
-//        $request['user_id'] = Auth::user()->id;
-//        Customer::create($request->all(['name','address','postalCode','city','email','url','user_id']));
-        return redirect(route('customer.index'));
+        if(Auth::user()->can('create',Order::class)){
+            $customer = New Customer();
+            $customer->name = $request->name;
+            $customer->address = $request->address;
+            $customer->postalCode = $request->postalCode;
+            $customer->city = $request->city;
+            $customer->email = $request->email;
+            $customer->url = $request->url;
+            $customer->user_id = Auth::user()->id;
+            $customer->save();
+            return redirect(route('customer.index'));
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
     /**
@@ -58,7 +70,12 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return view('customer.show',['customer'=>$customer]);
+        if ((Auth::user()->can('view',$customer))){
+            return view('customer.show',['customer'=>$customer]);
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
     /**
@@ -69,7 +86,12 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        return view('customer.edit',['customer'=>$customer]);
+        if ((Auth::user()->can('update',$customer))) {
+            return view('customer.edit', ['customer' => $customer]);
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
 
@@ -83,14 +105,24 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $customer->update($request->all(['name','address','postalCode','city','email','url']));
-        return redirect(route('customer.show',['customer'=>$customer]));
+        if (Auth::user()->can('update',$customer)) {
+            $customer->update($request->all(['name', 'address', 'postalCode', 'city', 'email', 'url']));
+            return redirect(route('customer.show', ['customer' => $customer]));
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
 
     public function delete(Customer $customer)
     {
-        return view('customer.delete',['customer'=>$customer]);
+        if (Auth::user()->can('delete',$customer)) {
+            return view('customer.delete', ['customer' => $customer]);
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -100,10 +132,40 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->delete();
-        return redirect(route('customer.index'));
+        if(Auth::user()->can('delete',$customer)){
+            $customer->delete();
+            return redirect(route('customer.index'));
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+
+        }
     }
 
+    public function createOrder(Customer $customer)
+    {
+        if(Auth::user()->can('createOrder',$customer)){
+            return view('customer.createOrder',['customer'=>$customer]);
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
+    }
 
+    public function storeOrder(Request $request,Customer $customer)
+    {
+        if(Auth::user()->can('createOrder',$customer)) {
+            Order::create([
+                'datetime' => $request->date . ' ' . $request->time,
+                'amount' => $request->amount,
+                'amountVTA' => $request->amountVTA,
+                'customer_id' => $customer->id
+            ]);
+            return redirect(route('customer.show', ['customer' => $customer]));
+        }
+        else{
+            return view('error',['message'=>'Not allowed']);
+        }
+    }
 }
 

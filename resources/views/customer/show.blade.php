@@ -52,9 +52,12 @@
         <div class="col-9">
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
-                    <h3>{{__('Orders')}}</h3>
-                    {{__('Create')}}
-                    <x-buttons.create :route="route('order.create')"></x-buttons.create>
+                    <h3>{{__('Orders')}}
+                        <a href="{{route('customer.createOrder',['customer'=>$customer])}}" class="btn btn-primary">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </h3>
+
                     <x-order.table :orders="$customer->orders"></x-order.table>
                 </div>
                 <!-- /.card-body -->

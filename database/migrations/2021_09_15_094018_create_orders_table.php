@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->dateTime('datetime')->default(DB::raw('now()'));
             $table->float('amount');
-            $table->float('amountTVA');
+            $table->float('amountVTA');
             $table->foreignId('customer_id');
             $table->timestamps();
         });

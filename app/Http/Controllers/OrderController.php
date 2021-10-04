@@ -15,7 +15,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('order.index',['orders'=>Auth::user()->orders()->with('customer')->get()]);
+
+        $orders = Auth::user()->orders()->with('customer')->get();
+        return view('order.index',['orders'=>
+            $orders->filter(function($order){
+                return Auth::user()->can('view',$order);
+            })
+        ]);
     }
 
     /**
@@ -36,13 +42,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = New Order();
-        $order->amount = $request->amount;
-        $order->amountTVA = $request->amountTVA;
-        $order->datetime = $request->datetime;
-        $order->customer_id = 1;
-        $order->save();
-        return redirect(route('customer.index'));
+
     }
 
     /**
@@ -53,7 +53,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('order.show',['order'=>$order]);
+        if(Auth::user()->can('view',$order)) {
+            return view('order.show', ['order' => $order]);
+        }else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
     /**
@@ -64,7 +68,11 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('order.edit',['order'=>$order]);
+        if(Auth::user()->can('update',$order)) {
+            return view('order.edit', ['order' => $order]);
+        }else{
+            return view('error',['message'=>'Not allowed']);
+        }
     }
 
     /**
@@ -79,6 +87,15 @@ class OrderController extends Controller
 
     }
 
+    public function delete(Order $order)
+    {
+        if(Auth::user()->can('delete',$order)) {
+            return view('order.delete', ['order' => $order]);
+        }else{
+            return view('error',['message'=>'Not allowed']);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -87,7 +104,13 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->delete();
-        return redirect('customer.show',['customer'=>$order->customer]);
+        if(Auth::user()->can('delete',$order)) {
+            $order->delete();
+            return redirect(route('customer.show', ['customer' => $order->customer]));
+        }else{
+            return view('error',['message'=>'Not allowed']);
+
+        }
+
     }
 }

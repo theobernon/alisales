@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             'email'=>'test@test.fr',
             'password'=>Hash::make('12345678'),
         ]);
+//        User::create([
+//            'name'=>'Saler01',
+//            'email'=>'saler01@alizon.fr',
+//            'password'=>Hash::make('12345678'),
+//        ]);
         User::factory(10)->create();
         $this->call([
             CustomerSeeder::class,

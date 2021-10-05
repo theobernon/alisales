@@ -42,12 +42,12 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $response = $this->loginAuthenticatesUsers($request);
-        $apiResponse = Http::asForm()->post('https://alizon.btssioroc.com/api/v1/login',[
-            'email'=>'test@test.fr',
-            'password'=>'12345678'
+        //$response = $this->loginAuthenticatesUsers($request);
+        $apiResponse = Http::asForm()->post('v1/login',[
+            'email'=>$request->email,
+            'password'=>$request->password,
         ]);
-            dd($apiResponse);
+        dd($apiResponse);
         return $response;
     }
 }

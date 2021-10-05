@@ -252,6 +252,12 @@ return [
             'route'  => 'order.index',
             'icon'=>'fa fa-euro-sign'
         ],
+
+        [
+            'text' => 'Categories',
+            'route'  => 'category.index',
+            'icon'=>'fa fa-tags'
+        ],
     ],
 
     /*

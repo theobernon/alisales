@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApiModel;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use \Illuminate\Support\Facades\Session;
+
 
 class LoginController extends Controller
 {
@@ -42,12 +45,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        //$response = $this->loginAuthenticatesUsers($request);
-        $apiResponse = Http::asForm()->post('v1/login',[
+        $response = $this->loginAuthenticatesUsers($request);
+        $apiResponse = ApiModel::post('login',[
             'email'=>$request->email,
-            'password'=>$request->password,
+            'password'=>$request->password
         ]);
-        dd($apiResponse);
+        if(isset($apiResponse->success)) {
+            $token = $apiResponse->success->token;
+            Session::put('api_token',$token);
+
+        }
         return $response;
     }
 }

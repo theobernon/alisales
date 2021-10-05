@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('order',OrderController::class);
     Route::get('order/{order}/delete',[OrderController::class,'delete'])->name('order.delete');
 
+    Route::resource('category',CategoryController::class);
 
 //    Route::resource('order',\App\Http\Controllers\OrderController::class);
 //    Route::get('order/{customer}/createOrder',[CustomerController::class,'create']);

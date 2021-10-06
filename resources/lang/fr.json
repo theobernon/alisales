@@ -17,5 +17,10 @@
     "Date" : "Date",
     "Add  an order": "Ajouter une commande",
     "Not allowed" : "Interdit",
-    "Error" : "Erreur"
+    "Error" : "Erreur",
+    "Categories" : "Catégories",
+    "Children" : "Enfant",
+    "Ordered products" : "Produits commandés"
+
+
 }
